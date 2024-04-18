@@ -12,19 +12,23 @@ namespace cat.itb.M6UF3EA1.CRUD
 {
     public class CRUDMongoDB<T>
     {
-        private IMongoCollection<BsonDocument> Collection;
-        private BsonClassMap<T> ClassMap;
+        protected IMongoCollection<BsonDocument> Collection;
 
-        private CRUDMongoDB(BsonClassMap<T> classMap,string database, string collection)
+
+        public IMongoDatabase GetDatabase()
+        {
+            return Collection.Database;
+        }
+        public CRUDMongoDB(string database, string collection)
         {
             Collection = MongoLocalConnection.GetDatabase(database).GetCollection<BsonDocument>(collection);
-            ClassMap = classMap;
         }
-        public CRUDMongoDB(BsonClassMap<T> classMap):this(classMap,ConfigurationHelper.GetDB(),ConfigurationHelper.GetDBUrl()) { }
+        public CRUDMongoDB():this(ConfigurationHelper.GetDB(),ConfigurationHelper.GetDBUrl()) { }
 
         public void Insert(T element)
         {
             string json = JsonSerializer.Serialize(element);
+            
             BsonDocument bson = BsonDocument.Parse(json);
             Collection.InsertOne(bson);
         }
@@ -39,7 +43,7 @@ namespace cat.itb.M6UF3EA1.CRUD
                 Insert(element);
             }
         }
-        public List<T> Select()
+        /*public List<T> Select()
         {
 
             List <BsonDocument> elements = Collection.Find(new BsonDocument()).ToList();
@@ -51,6 +55,14 @@ namespace cat.itb.M6UF3EA1.CRUD
                 result.Add(JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(dotNetObj)));
             }
             return result;
+        }*/
+        public List<BsonDocument> SelectBson(FilterDefinition<BsonDocument> condition)
+        {
+            return Collection.Find(condition).ToList();
+        }
+        public List<BsonDocument> SelectBson(FilterDefinition<BsonDocument> filter, ProjectionDefinition<BsonDocument> projection)
+        {
+            return Collection.Find(filter).Project(projection).ToList();
         }
     }
 }

@@ -14,57 +14,55 @@ public class Driver
 {
     public static void Main()
     {
-        CRUDMongoDB<Student> crudStudent = new CRUDMongoDB<Student>(BsonClassMap.RegisterClassMap<Student>(classMap =>
-        {
-            classMap.AutoMap();
-        }));
-        //ACT1InsertGrades(crudStudent);
-        crudStudent.Select();
-    }
-    public static void ACT1InsertGrades(CRUDMongoDB<Student> crud)
-    {
+        const string Menu = "1. InsertData\n" +
+            "2. ShowDAMvStudents\n" +
+            "3. ShowPerfectStudents\n" +
+            "4. StudentsBellow50\n" +
+            "5. ShowInterestsFromStudent\n" +
+            "6. InsertJSONFiles\n" +
+            "7. Exit";
+        const int InsertOption = 1;
+        const int ShowDamvOption = 2;
+        const int ShowPerfectStOption = 3;
+        const int ShowBadStudentOption = 4;
+        const int ShowInterestsOption = 5;
+        const int InsertJSONFile = 6;
+        const int ExitOption = 7;
 
-        Student[] student = 
-        { 
-            new Student()
+        EAOneCRUD crudStudent = new EAOneCRUD();
+        int option;
+        do
+        {
+            Console.WriteLine(Menu);
+            option = Convert.ToInt32(Console.ReadLine());
+
+            switch (option)
             {
-                student_id = 111333444,
-                name = "someone",
-                surname = "yeahSomeone",
-                class_id = 1,
-                group = "DAMv",
-                scores = new List<Score>
-                {
-                    new Score()
-                    {
-                        type = "exam",
-                        score = 100
-                    },
-                    new Score()
-                    {
-                        type = "teamWork",
-                        score = 50
-                    }
-                }
-            },
-            new Student()
-            {
-                student_id = 111222333,
-                name = "->H1",
-                surname = "Some tekken move",
-                class_id = 20,
-                group = "DAWe",
-                interests = new List<string>()
-                {
-                    "music","gym","code","electronics"
-                }
+                case InsertOption:
+                    crudStudent.ACT1InsertGrades();
+                    break;
+                case ShowDamvOption:
+                    Console.WriteLine(string.Join('\n', crudStudent.SelectBson(Builders<BsonDocument>.Filter.Eq("group", "DAMv"))));
+                    break;
+                case ShowPerfectStOption:
+                    Console.WriteLine(string.Join('\n', crudStudent.SelectBson(Builders<BsonDocument>.Filter.Eq("scores.type", "exam") & Builders<BsonDocument>.Filter.Eq("scores.score", 100))));
+                    break;
+                case ShowBadStudentOption:
+                    Console.WriteLine(string.Join('\n', crudStudent.SelectBson(Builders<BsonDocument>.Filter.Eq("scores.type", "exam") & Builders<BsonDocument>.Filter.Lt("scores.score", 50))));
+                    break;
+                case ShowInterestsOption:
+                    Console.WriteLine(string.Join('\n', crudStudent.SelectBson(Builders<BsonDocument>.Filter.Eq("student_id", 111222333), Builders<BsonDocument>.Projection.Include("interests").Exclude("_id"))));
+                    break;
+                case InsertJSONFile:
+                    break;
             }
-        };
-        crud.Insert(student);
+        } while (option != ExitOption);
+        
+        
+        
+        
+        
         
     }
-    public static void ACT2SelectDAMv()
-    {
-
-    }
+    
 }

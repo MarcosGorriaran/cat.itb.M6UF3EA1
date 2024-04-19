@@ -54,6 +54,7 @@ public class Driver
                     Console.WriteLine(string.Join('\n', crudStudent.SelectBson(Builders<BsonDocument>.Filter.Eq("student_id", 111222333), Builders<BsonDocument>.Projection.Include("interests").Exclude("_id"))));
                     break;
                 case InsertJSONFile:
+                    crudStudent.ACT6InsertFiles();
                     break;
             }
         } while (option != ExitOption);

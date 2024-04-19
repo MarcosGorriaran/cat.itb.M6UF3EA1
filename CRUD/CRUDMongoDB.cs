@@ -38,9 +38,10 @@ namespace cat.itb.M6UF3EA1.CRUD
         }
         public void Insert(IEnumerable<T> elements)
         {
-            foreach(T element in elements) 
+            List<T> list = elements.ToList();
+            for (int i = 0; i<list.Count(); i++) 
             {
-                Insert(element);
+                Insert(list[i]);
             }
         }
         /*public List<T> Select()

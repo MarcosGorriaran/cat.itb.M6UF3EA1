@@ -1,5 +1,4 @@
 ﻿using cat.itb.M6UF3EA1.Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace cat.itb.M6UF3EA1.CRUD
@@ -8,7 +7,7 @@ namespace cat.itb.M6UF3EA1.CRUD
     {
         public void ACT1InsertGrades()
         {
-
+            
             Grade[] student =
             {
             new Grade()
@@ -80,7 +79,8 @@ namespace cat.itb.M6UF3EA1.CRUD
             bookCRUD.Insert(Book.ReadJSONArrayFile("../../../FitxersJSON/books.json"));
             peopleCRUD.Insert(People.ReadJSONArrayFile("../../../FitxersJSON/people.json"));
             productCRUD.Insert(Product.ReadJSONArray(File.ReadAllText("../../../FitxersJSON/products.json").Split('\n')));
-
+            restaurantCRUD.Insert(Restaurant.ReadJSONArray(File.ReadAllText("../../../FitxersJSON/restaurants.json").Split('\n').ToList()));
+            studentCRUD.Insert(Student.ReadJSONArray(File.ReadAllText("../../../FitxersJSON/students.json").Split('\n')));
         }
     }
 }

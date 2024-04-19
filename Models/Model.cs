@@ -10,7 +10,11 @@ namespace cat.itb.M6UF3EA1.Models
             List<T> result = new List<T>();
             foreach(string element in json) 
             {
-                result.Add(JsonConvert.DeserializeObject<T>(element));
+                if(element != string.Empty)
+                {
+                    result.Add(JsonConvert.DeserializeObject<T>(element));
+                }
+                
             }
             return result;
         }

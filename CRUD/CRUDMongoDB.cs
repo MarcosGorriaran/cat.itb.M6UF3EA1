@@ -64,5 +64,12 @@ namespace cat.itb.M6UF3EA1.CRUD
         {
             return Collection.Find(filter).Project(projection).ToList();
         }
+        public void ImportJSONElements(params string[] json)
+        {
+            foreach(string element in json)
+            {
+                Collection.InsertOne(BsonDocument.Parse(element));
+            }
+        }
     }
 }

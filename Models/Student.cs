@@ -1,20 +1,16 @@
-﻿using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-
-namespace cat.itb.M6UF3EA1.Models
+﻿namespace cat.itb.M6UF3EA1.Models
 {
-    public class Student
+    public class Student : Model<Student>
     {
-        [JsonIgnore(Condition =JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("_id")]
-        public string Id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public int class_id { get; set; }
-        public string group {  get; set; }
-        public List<Score> scores { get; set; }
-        public int student_id { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<string> interests { get; set; }
+        public Oid _id {  get; set; }
+        public string firstname { get; set; }
+        public string lastname1 { get; set; }
+        public string lastname2 { get; set;}
+        public string dni { get; set; }
+        public string gender { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
+        public string phone_aux { get; set; }
+        public int birth_year { get; set; }
     }
 }

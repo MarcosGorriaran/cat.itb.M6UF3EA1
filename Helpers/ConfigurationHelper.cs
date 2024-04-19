@@ -10,27 +10,51 @@ namespace cat.itb.M6UF3EA1.Helpers
         const string CollectionDataName = "Collection";
         public static string GetDBUrl()
         {
-            IConfiguration config = new ConfigurationBuilder()
+            try
+            {
+                IConfiguration config = new ConfigurationBuilder()
                 .AddJsonFile(ConfPath, optional: false, reloadOnChange: true)
                 .Build();
 
-            return config.GetConnectionString(URLDataName);
+                return config.GetConnectionString(URLDataName);
+            }
+            catch(FileNotFoundException)
+            {
+                throw new FileNotFoundException("The appsettings.json has not been added to the folder of the program, please add it to "+Directory.GetCurrentDirectory()+", you can find it at the root of the proyect folder.");
+            }
+            
         }
         public static string GetDB()
         {
-            IConfiguration config = new ConfigurationBuilder()
+            try
+            {
+                IConfiguration config = new ConfigurationBuilder()
                 .AddJsonFile(ConfPath, optional: false, reloadOnChange: true)
                 .Build();
 
-            return config.GetConnectionString(DBDataName);
+                return config.GetConnectionString(DBDataName);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new FileNotFoundException("The appsettings.json has not been added to the folder of the program, please add it to " + Directory.GetCurrentDirectory() + ", you can find it at the root of the proyect folder.");
+            }
+            
         }
         public static string GetCollection()
         {
-            IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile(ConfPath, optional: false, reloadOnChange: true)
-                .Build();
+            try
+            {
+                IConfiguration config = new ConfigurationBuilder()
+                                .AddJsonFile(ConfPath, optional: false, reloadOnChange: true)
+                                .Build();
 
-            return config.GetConnectionString(CollectionDataName);
+                return config.GetConnectionString(CollectionDataName);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new FileNotFoundException("The appsettings.json has not been added to the folder of the program, please add it to " + Directory.GetCurrentDirectory() + ", you can find it at the root of the proyect folder.");
+            }
+            
         }
     }
 }

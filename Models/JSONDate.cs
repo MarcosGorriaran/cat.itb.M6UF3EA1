@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 namespace cat.itb.M6UF3EA1.Models;
-public class PublishedDate
+public class JSONDate
     {
         [JsonProperty("$date")] 
         public String date { get; set; }
